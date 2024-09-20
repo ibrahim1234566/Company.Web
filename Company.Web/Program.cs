@@ -1,4 +1,6 @@
 using Company.Data.Contexts;
+using Company.Repository.interfaces;
+using Company.Repository.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Web
@@ -13,6 +15,8 @@ namespace Company.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<CompanyDbContext>(op =>
     op.UseSqlServer(builder.Configuration.GetConnectionString("myconn")));
+
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
             var app = builder.Build();
 
