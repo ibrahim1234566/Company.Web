@@ -57,5 +57,25 @@ namespace Company.Web.Controllers
             }
             return View(dept);   
         }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var dept = _departmetService.GetById(id);
+                if (dept == null)
+                {
+                    return NotFound();
+                }
+
+                _departmetService.Delete(dept);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("DepartmentError", ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
     }
 }

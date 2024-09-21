@@ -30,9 +30,11 @@
                         </a>
                     </td>
                     <td>
-                        <a asp-action="Delete" asp-route-id="@deparement.Id" class="btn btn-danger">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                        <form asp-action="Delete" asp-route-id="@deparement.Id" method="post" class="d-inline" id="deleteForm-@deparement.Id">
+                            <a href="javascript:document.getElementById('deleteForm-@deparement.Id').submit();" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </form>
                     </td>
                 </tr>
             }
