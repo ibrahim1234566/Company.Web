@@ -19,6 +19,12 @@ namespace Company.Web.Controllers
             var dept = _departmetService.GetAll();
             return View(dept);
         }
+        [HttpGet]
+        public IActionResult Create() 
+        {
+            return View();
+        }
+        [HttpPost]  
         public IActionResult Create(Department department )        
         {
             try
