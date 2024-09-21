@@ -47,5 +47,15 @@ namespace Company.Web.Controllers
             }
 
         }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var dept = _departmetService.GetById(id);
+            if (dept == null)
+            { 
+            return NotFound();  
+            }
+            return View(dept);   
+        }
     }
 }
