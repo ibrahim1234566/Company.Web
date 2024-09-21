@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Department>
+@using Company.Data.Models;
+<a asp-asp-controller="Department" asp-action="Create" class="btn btn-primary">Create New Department</a>
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(d => d.Name)</th>
+                <th>@Html.DisplayNameFor(d => d.Code)</th>
+                <th>Details</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var deparement in Model)
+            {
+                <tr>
+                    <td>@deparement.Name</td>
+                    <td>@deparement.Code</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@deparement.Id" class="btn btn-warning">
+                            <i class="fas fa-eye"></i> Details
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@deparement.Id" class="btn btn-success">
+                            <i class="fas fa-edit"></i> Update
+                        </a>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@deparement.Id" method="post" class="d-inline" id="deleteForm-@deparement.Id">
+                            <a href="javascript:document.getElementById('deleteForm-@deparement.Id').submit();" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="mt-5 alert alert-warning">
+        <h3>There is no Departments</h3>
+    </div>
+}
