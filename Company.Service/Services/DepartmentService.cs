@@ -29,7 +29,8 @@ namespace Company.Service.Services
 
         public IEnumerable<Department> GetAll()
         {
-           var dept = _departmetRepository.GetAll();
+            //softDelete
+           var dept = _departmetRepository.GetAll()/*.Where(x=>x.IsDeleted==false)*/;
             return dept;
         }
 

@@ -84,6 +84,9 @@ namespace Company.Web.Controllers
                 {
                     return NotFound();
                 }
+                //softDelete
+                /*dept.IsDeleted = true;
+                _departmetService.Update(dept);*/
 
                 _departmetService.Delete(dept);
                 return RedirectToAction(nameof(Index));
