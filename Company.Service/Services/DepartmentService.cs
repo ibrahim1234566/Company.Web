@@ -1,5 +1,6 @@
 ﻿using Company.Data.Models;
 using Company.Repository.interfaces;
+using Company.Repository.Repositories;
 using Company.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,25 +12,34 @@ namespace Company.Service.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly IDepartmetRepository _departmetRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DepartmentService(IDepartmetRepository departmetRepository)
+        public DepartmentService(IUnitOfWork unitOfWork)
         {
-            _departmetRepository = departmetRepository;
+            _unitOfWork = unitOfWork;
         }
         public void Add(Department department)
         {
-            _departmetRepository.Add(department);
+            var MappedDepartment = new Department
+            {
+                Code = department.Code,
+                Name = department.Name,
+                CreatedAt = DateTime.Now,
+            };
+            _unitOfWork.departmetRepository.Add(MappedDepartment);
+            _unitOfWork.Complete();
         }
 
         public void Delete(Department department)
         {
-            _departmetRepository.Delete(department);
+            _unitOfWork.departmetRepository.Delete(department);
+            _unitOfWork.Complete();
         }
 
         public IEnumerable<Department> GetAll()
         {
-           var dept = _departmetRepository.GetAll();
+            //softDelete
+           var dept = _unitOfWork.departmetRepository.GetAll()/*.Where(x=>x.IsDeleted==false)*/;
             return dept;
         }
 
@@ -39,7 +49,7 @@ namespace Company.Service.Services
             {
                 return null;
             }
-            var dept = _departmetRepository.GetById(id.Value);
+            var dept = _unitOfWork.departmetRepository.GetById(id.Value);
             if (dept is null)
             {
 
@@ -50,7 +60,20 @@ namespace Company.Service.Services
 
         public void Update(Department department)
         {
-            throw new NotImplementedException();
+            var dept = GetById(department.Id);
+            if (dept.Name != department.Name) 
+            {
+                if(GetAll().Any(x=>x.Name==department.Name))
+                {
+                    throw new Exception("DepartmentNameDublication");
+
+                }
+            
+            }
+            dept.Name = department.Name;
+            dept.Code = department.Code;
+            _unitOfWork.departmetRepository.Update(dept);
+            _unitOfWork.Complete(); 
         }
     }
 }
