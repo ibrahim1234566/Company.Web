@@ -19,9 +19,10 @@ namespace Company.Web
             builder.Services.AddDbContext<CompanyDbContext>(op =>
     op.UseSqlServer(builder.Configuration.GetConnectionString("myconn")));
 
-           // builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-          //  builder.Services.AddScoped<IDepartmetRepository, DepartmetRepository>();
+            // builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            //  builder.Services.AddScoped<IDepartmetRepository, DepartmetRepository>()
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped< IEmployeeService,EmployeeService> ();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
          //   builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
