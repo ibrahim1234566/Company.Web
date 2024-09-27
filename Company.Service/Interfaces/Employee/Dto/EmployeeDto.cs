@@ -1,5 +1,6 @@
 ﻿using Company.Data.Models;
 using Company.Service.Interfaces.Department.Dto;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Company.Service.Interfaces.Employee.Dto
         public string PhoneNumber { get; set; }
         public DateTime HiringDate { get; set; }
         public string ImgeUrl { get; set; }
+        public IFormFile Imge { get; set; }
+
 
         public DepartmentDto? Department { get; set; }
 
