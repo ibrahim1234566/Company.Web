@@ -2,6 +2,8 @@
 using Company.Repository.interfaces;
 using Company.Repository.Repositories;
 using Company.Service.Interfaces;
+using Company.Service.Interfaces.Department.Dto;
+using Company.Service.Interfaces.Employee.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,7 @@ namespace Company.Service.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public void Add(Department department)
+        public void Add(DepartmentDto department)
         {
             var MappedDepartment = new Department
             {
@@ -30,20 +32,27 @@ namespace Company.Service.Services
             _unitOfWork.Complete();
         }
 
-        public void Delete(Department department)
+        public void Delete(DepartmentDto department)
         {
             _unitOfWork.departmetRepository.Delete(department);
             _unitOfWork.Complete();
         }
 
-        public IEnumerable<Department> GetAll()
+        public IEnumerable<DepartmentDto> GetAll()
         {
             //softDelete
            var dept = _unitOfWork.departmetRepository.GetAll()/*.Where(x=>x.IsDeleted==false)*/;
-            return dept;
+            var MappedDepatment = dept.Select(x => new DepartmentDto
+            {
+         Code=x.Code,   
+         Name=x.Name,
+         Id=x.Id,
+
+            });
+            return MappedDepatment;
         }
 
-        public Department GetById(int? id)
+        public DepartmentDto GetById(int? id)
         {
             if(id is null)
             {
@@ -55,10 +64,23 @@ namespace Company.Service.Services
 
                 return null;
             }
+            DepartmentDto departmetDto = new DepartmentDto()
+            {
+                Address = emp.Address,
+                Age = emp.Age,
+                DepartmentId = emp.DepartmentId,
+                Email = emp.Email,
+                HiringDate = emp.HiringDate,
+                ImgeUrl = emp.ImgeUrl,
+                Name = emp.Name,
+                Salary = emp.Salary,
+                PhoneNumber = emp.PhoneNumber
+
+            };
             return dept;
         }
 
-        public void Update(Department department)
+        public void Update(DepartmentDto department)
         {
             var dept = GetById(department.Id);
             if (dept.Name != department.Name) 
