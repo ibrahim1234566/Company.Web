@@ -12,6 +12,7 @@ namespace Company.Service.Interfaces.Employee.Dto
 {
     public class EmployeeDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
 
