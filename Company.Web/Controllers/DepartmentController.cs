@@ -75,6 +75,7 @@ namespace Company.Web.Controllers
             return RedirectToAction(nameof(Index));
         }*/
 
+
         [HttpPost]
         public IActionResult Delete(int id)
         {

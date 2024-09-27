@@ -12,6 +12,7 @@ namespace Company.Service.Interfaces.Department.Dto
         public string Name { get; set; }
         public string Code { get; set; }
         public int Id { get; set; }
+        public DateTime CreatedAt { get; set; }
         public ICollection<EmployeeDto> Employees { get; set; } = new List<EmployeeDto>();
     }
 }

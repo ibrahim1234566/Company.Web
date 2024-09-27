@@ -25,11 +25,12 @@ namespace Company.Web
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped< IEmployeeService,EmployeeService> ();
-            builder.Services.AddAutoMapper(x=>x.AddProfile(new EmployeeProfile()));    
-            
+            builder.Services.AddAutoMapper(x=>x.AddProfile(new EmployeeProfile()));
+            builder.Services.AddAutoMapper(x => x.AddProfile(new DepartmentProfile()));
 
-         //   builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
-           // builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
+
+            //   builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
+            // builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
 
             var app = builder.Build();
 
