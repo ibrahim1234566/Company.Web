@@ -1,4 +1,5 @@
-﻿@model Employee  
+﻿@using Company.Service.Interfaces.Employee.Dto
+@model EmployeeDto 
 
  @{
     var departments = new SelectList(ViewBag.Departments, nameof(Department.Id), nameof(Department.Name));
@@ -59,8 +60,8 @@
         <input type="file" class="form-control-file" asp-for="ImgeUrl" />
     </div> *@
     <div class="form-group">
-        <label class="col-form-label" asp-for="ImgeUrl"></label>
-        <input type="file" class="form-control-file" asp-for="ImgeUrl" />
+        <label class="col-form-label" asp-for="Imge"></label>
+        <input type="file" class="form-control-file" asp-for="Imge" />
     </div>
 
     <input type="submit" value="Create" class="btn btn-primary" />

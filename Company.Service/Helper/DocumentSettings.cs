@@ -18,7 +18,7 @@ namespace Company.Service.Helper
             var FilePath = Path.Combine(FolderPath,FileName);
             using var FileStream = new FileStream(FilePath, FileMode.Create);
             file .CopyTo(FileStream);
-            return FilePath;
+            return FileName;
         }
     }
 }

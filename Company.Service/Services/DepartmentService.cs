@@ -44,7 +44,7 @@ namespace Company.Service.Services
             _unitOfWork.Complete();
         }
 
-        public IEnumerable<DepartmentDto> GetAll()
+        public IEnumerable<Department> GetAll()
         {
             //softDelete
            var dept = _unitOfWork.departmetRepository.GetAll()/*.Where(x=>x.IsDeleted==false)*/;
@@ -55,8 +55,8 @@ namespace Company.Service.Services
          Id=x.Id,
 
             });*/
-            IEnumerable<DepartmentDto> MappedDepatment = _mapper.Map<IEnumerable<DepartmentDto>>(dept);
-            return MappedDepatment;
+            //IEnumerable<DepartmentDto> MappedDepatment = _mapper.Map<IEnumerable<DepartmentDto>>(dept);
+            return dept;
         }
 
         public DepartmentDto GetById(int? id)

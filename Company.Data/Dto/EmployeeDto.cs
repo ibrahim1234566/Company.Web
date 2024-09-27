@@ -3,6 +3,7 @@ using Company.Service.Interfaces.Department.Dto;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,8 @@ namespace Company.Service.Interfaces.Employee.Dto
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime HiringDate { get; set; }
-        public string ImgeUrl { get; set; }
+        public string? ImgeUrl { get; set; }
+        [NotMapped]
         public IFormFile Imge { get; set; }
 
 

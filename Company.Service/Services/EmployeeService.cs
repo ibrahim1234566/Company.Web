@@ -2,6 +2,7 @@
 using Company.Data.Models;
 using Company.Repository.interfaces;
 using Company.Repository.Repositories;
+using Company.Service.Helper;
 using Company.Service.Interfaces;
 using Company.Service.Interfaces.Employee.Dto;
 using System;
@@ -39,6 +40,7 @@ namespace Company.Service.Services
                 PhoneNumber = employeeDto.PhoneNumber  
 
             };*/
+            employeeDto.ImgeUrl = DocumentSettings.UploadFile(employeeDto.Imge,"Images");
             Employee employee = _mapper.Map<Employee>(employeeDto);
             _unitOfWork.employeeRepository.Add(employee);
             _unitOfWork.Complete();
