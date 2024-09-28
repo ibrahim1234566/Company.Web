@@ -5,6 +5,7 @@ using Company.Repository.Repositories;
 using Company.Service.Interfaces;
 using Company.Service.Mapping;
 using Company.Service.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Web
@@ -27,6 +28,34 @@ namespace Company.Web
             builder.Services.AddScoped< IEmployeeService,EmployeeService> ();
             builder.Services.AddAutoMapper(x=>x.AddProfile(new EmployeeProfile()));
             builder.Services.AddAutoMapper(x => x.AddProfile(new DepartmentProfile()));
+            builder.Services.AddIdentity<ApplicationUser,IdentityRole>(config=>
+            {
+                config.Password.RequiredUniqueChars = 2;
+                config.Password.RequireDigit = true;
+                config.Password.RequireLowercase = true;
+                config.Password.RequireUppercase = true;
+                config.Password.RequireNonAlphanumeric = true;
+                config.User.RequireUniqueEmail = true;
+                config.Lockout.AllowedForNewUsers = true;
+                config.Lockout.MaxFailedAccessAttempts = 3;
+                config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
+
+            }).AddEntityFrameworkStores<CompanyDbContext>()
+              .AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(Option=>
+            {
+                Option.Cookie.HttpOnly = true;
+                Option.ExpireTimeSpan = TimeSpan.FromHours(1);
+                Option.SlidingExpiration = true;
+                Option.LogoutPath = "/Account//Logout";
+                Option.LoginPath= "/Account//Login";
+                Option.AccessDeniedPath= "/Account//AcressDenied";    
+            });
+
+
+
+
 
 
             //   builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
@@ -46,6 +75,7 @@ namespace Company.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
