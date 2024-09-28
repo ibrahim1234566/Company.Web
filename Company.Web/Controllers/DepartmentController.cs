@@ -1,6 +1,7 @@
 ﻿using Company.Data.Models;
 using Company.Repository.interfaces;
 using Company.Service.Interfaces;
+using Company.Service.Interfaces.Department.Dto;
 using Company.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,7 @@ namespace Company.Web.Controllers
             return View();
         }
         [HttpPost]  
-        public IActionResult Create(Department department )        
+        public IActionResult Create(DepartmentDto department )        
         {
             try
             {
@@ -57,7 +58,7 @@ namespace Company.Web.Controllers
             }
             return View(viewname,dept);   
         }
-        [HttpGet]
+      /*  [HttpGet]
         public IActionResult Update(int? id)
         {
             return Details(id, "Update");
@@ -72,7 +73,8 @@ namespace Company.Web.Controllers
             }
             _departmetService.Update(department);
             return RedirectToAction(nameof(Index));
-        }
+        }*/
+
 
         [HttpPost]
         public IActionResult Delete(int id)

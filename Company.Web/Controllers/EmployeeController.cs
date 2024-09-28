@@ -1,5 +1,6 @@
 ﻿using Company.Data.Models;
 using Company.Service.Interfaces;
+using Company.Service.Interfaces.Employee.Dto;
 using Company.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +39,7 @@ namespace Company.Web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Employee employee)
+        public IActionResult Create(EmployeeDto employee)
         {
             try
             {
