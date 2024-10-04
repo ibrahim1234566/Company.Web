@@ -37,7 +37,7 @@ namespace Company.Web.Controllers
                 var result = await _userManager.CreateAsync(user,input.Password);
                 if (result.Succeeded) 
                 {
-                    RedirectToAction("SignIn");
+                    return RedirectToAction("SignIn");
                 }
 
                 foreach (var err in result.Errors) 
