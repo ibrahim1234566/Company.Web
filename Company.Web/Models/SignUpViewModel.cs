@@ -13,7 +13,7 @@ namespace Company.Web.Models
         [EmailAddress(ErrorMessage ="Invalid E mail Format")]// @"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$"
         public string Email { get; set; }
         [Required(ErrorMessage = "Password is required")]
-        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$", ErrorMessage = "password doesn't match requirments")]
+        //[RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W_]).{8,}$", ErrorMessage = "password doesn't match requirments")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Confirm Password is required")]

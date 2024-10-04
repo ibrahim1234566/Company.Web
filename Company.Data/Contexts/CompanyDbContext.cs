@@ -15,10 +15,11 @@ namespace Company.Data.Contexts
         public CompanyDbContext(DbContextOptions options) : base(options)
         {
         }
-       /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-        }*/
+         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+         {
+             base.OnConfiguring(optionsBuilder);
+         }
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
