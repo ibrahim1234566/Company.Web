@@ -83,6 +83,12 @@ namespace Company.Web.Controllers
                         _logger.LogInformation("user updated successfully");
                         return RedirectToAction(nameof(Index));
                     }
+                    else
+                    {
+                        _logger.LogInformation("user updated Failed");
+                        return View(appUserUpdate);
+
+                    }
 
 
                 }
