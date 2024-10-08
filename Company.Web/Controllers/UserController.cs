@@ -1,4 +1,5 @@
 ﻿using Company.Data.Models;
+using Company.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,8 +40,63 @@ namespace Company.Web.Controllers
             {
                 return NotFound();
             }
+            if (viewname == "Update")
+            {
+
+                var UserModel = new UserUpdateViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName
+                };
+                return View(viewname,UserModel);
+            }
             return View(viewname, user);
         }
+
+          [HttpGet]
+    public async Task <IActionResult> Update(string? id)
+    {
+        return await Details(id, "Update");
+
+    }
+    [HttpPost]
+    public async Task<IActionResult> Update(string? id,UserUpdateViewModel appUserUpdate)
+    {
+            if (id != appUserUpdate.Id) 
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid) 
+            {
+                try
+                {
+                    var user = await _userManager.FindByIdAsync(id);
+                    if (user is null)
+                    {
+                        return NotFound();
+                    }
+                    user.UserName = appUserUpdate.UserName;
+                    user.NormalizedUserName = appUserUpdate.UserName.ToUpper();
+                    var res= await _userManager.UpdateAsync(user);
+                    if (res.Succeeded)
+                    {
+                        _logger.LogInformation("user updated successfully");
+                        return RedirectToAction(nameof(Index));
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                   _logger.LogInformation(ex.Message);
+
+                }
+            
+            }
+
+        return View(appUserUpdate);
+    }
+
 
     }
 }
