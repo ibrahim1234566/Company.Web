@@ -1,6 +1,10 @@
-﻿using Company.Data.Models;
+﻿using AutoMapper;
+using Company.Data.Models;
 using Company.Repository.interfaces;
+using Company.Repository.Repositories;
 using Company.Service.Interfaces;
+using Company.Service.Interfaces.Department.Dto;
+using Company.Service.Interfaces.Employee.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,46 +15,97 @@ namespace Company.Service.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly IDepartmetRepository _departmetRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public DepartmentService(IDepartmetRepository departmetRepository)
+        public DepartmentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _departmetRepository = departmetRepository;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public void Add(Department department)
+        public void Add(DepartmentDto department)
         {
-            _departmetRepository.Add(department);
+            /* var MappedDepartment = new Department
+             {
+                 Code = department.Code,
+                 Name = department.Name,
+                 CreatedAt = DateTime.Now,
+             };*/
+            //Employee employee = _mapper.Map<Employee>(employeeDto);
+            Department department1 = _mapper.Map<Department>(department);
+            _unitOfWork.departmetRepository.Add(department1);
+            _unitOfWork.Complete();
         }
 
-        public void Delete(Department department)
+        public void Delete(DepartmentDto departmentdto)
         {
-            _departmetRepository.Delete(department);
+            Department department = _unitOfWork.departmetRepository.GetById(departmentdto.Id);
+            _unitOfWork.departmetRepository.Delete(department);
+            _unitOfWork.Complete();
         }
 
-        public IEnumerable<Department> GetAll()
+        public IEnumerable<DepartmentDto> GetAll()
         {
-           var dept = _departmetRepository.GetAll();
-            return dept;
+            //softDelete
+           var dept = _unitOfWork.departmetRepository.GetAll()/*.Where(x=>x.IsDeleted==false)*/;
+            /*var MappedDepatment = dept.Select(x => new DepartmentDto
+            {
+         Code=x.Code,   
+         Name=x.Name,
+         Id=x.Id,
+
+            });*/
+            IEnumerable<DepartmentDto> mappedDepartment = _mapper.Map<IEnumerable<DepartmentDto>>(dept);
+
+           
+            return mappedDepartment;
         }
 
-        public Department GetById(int? id)
+        public DepartmentDto GetById(int? id)
         {
             if(id is null)
             {
                 return null;
             }
-            var dept = _departmetRepository.GetById(id.Value);
+            var dept = _unitOfWork.departmetRepository.GetById(id.Value);
             if (dept is null)
             {
 
                 return null;
             }
-            return dept;
+            /* DepartmentDto departmetDto = new DepartmentDto()
+             {
+                 Address = emp.Address,
+                 Age = emp.Age,
+                 DepartmentId = emp.DepartmentId,
+                 Email = emp.Email,
+                 HiringDate = emp.HiringDate,
+                 ImgeUrl = emp.ImgeUrl,
+                 Name = emp.Name,
+                 Salary = emp.Salary,
+                 PhoneNumber = emp.PhoneNumber
+
+             };*/
+            DepartmentDto departmentDto = _mapper.Map<DepartmentDto>(dept);
+            return departmentDto;
         }
 
-        public void Update(Department department)
+       /* public void Update(DepartmentDto department)
         {
-            throw new NotImplementedException();
-        }
+            var dept = GetById(department.Id);
+            if (dept.Name != department.Name) 
+            {
+                if(GetAll().Any(x=>x.Name==department.Name))
+                {
+                    throw new Exception("DepartmentNameDublication");
+
+                }
+            
+            }
+            dept.Name = department.Name;
+            dept.Code = department.Code;
+            _unitOfWork.departmetRepository.Update(dept);
+            _unitOfWork.Complete(); 
+        }*/
     }
 }

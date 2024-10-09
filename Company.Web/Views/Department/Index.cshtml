@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Department>
+﻿@model IEnumerable<DepartmentDto>
 @using Company.Data.Models;
+@using Company.Service.Interfaces.Department.Dto
 <a asp-asp-controller="Department" asp-action="Create" class="btn btn-primary">Create New Department</a>
 @if (Model.Count() > 0)
 {
