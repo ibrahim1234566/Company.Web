@@ -50,7 +50,7 @@ namespace Company.Web
                 Option.SlidingExpiration = true;
                 Option.LogoutPath = "/Account//Logout";
                 Option.LoginPath= "/Account//Login";
-                Option.AccessDeniedPath= "/Account//AcressDenied";    
+                Option.AccessDeniedPath= "/Account//AccessDenied";    
             });
 
 
